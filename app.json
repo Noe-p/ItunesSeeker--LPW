@@ -1,5 +1,9 @@
 {
   "expo": {
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "scss", "sass"]
+    },
     "name": "itunesSeeker",
     "slug": "itunesSeeker",
     "version": "1.0.0",
@@ -13,9 +17,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
