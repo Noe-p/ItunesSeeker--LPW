@@ -1,8 +1,7 @@
 import React from 'react';
 import { TextInputProps } from 'react-native';
-import searchInputStyle from '../../styles/components/searchInput.scss';
 import { Input } from './Input';
-
+import { searchInputStyle } from './searchInputStyle';
 interface SearchInputProps extends TextInputProps {}
 
 export function SearchInput(props: SearchInputProps): JSX.Element {

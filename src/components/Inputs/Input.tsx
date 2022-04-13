@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import inputStyle from '../../styles/components/input.scss';
+import { inputStyle } from './inputStyle';
 
 interface InputProps extends TextInputProps {
   icon?: string;
@@ -9,7 +9,6 @@ interface InputProps extends TextInputProps {
 
 export function Input(props: InputProps): JSX.Element {
   const { style, icon } = props;
-
   return (
     <View style={[inputStyle.container, style]}>
       {icon ? (

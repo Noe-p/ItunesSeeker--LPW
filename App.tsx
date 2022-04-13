@@ -2,51 +2,53 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Provider } from 'react-redux';
+import { appStyle } from './appStyle';
 import { HomePage, SearchPage } from './src/pages';
-import appStyles from './src/styles/app.scss';
+import store from './store';
 
 export default function App(): JSX.Element {
   const Tabs = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
-      <Tabs.Navigator
-        initialRouteName='Home'
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, size, color }) => {
-            let iconName = 'home';
-            if (route.name == 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
-              color = focused ? 'white' : 'grey';
-            } else if (route.name == 'Search') {
-              iconName = focused ? 'search' : 'search-outline';
-              color = focused ? 'white' : 'grey';
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarStyle: appStyles.tab,
-          tabBarActiveTintColor: 'white',
-        })}
-      >
-        <Tabs.Screen
-          name='Home'
-          component={HomePage}
-          options={{
-            title: 'Bibliothèque',
-            headerStyle: appStyles.header,
-            headerShadowVisible: false,
-          }}
-        />
-        <Tabs.Screen
-          name='Search'
-          component={SearchPage}
-          options={{
-            title: 'Rechercher',
-            headerStyle: appStyles.header,
-            headerShadowVisible: false,
-          }}
-        />
-      </Tabs.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tabs.Navigator
+          initialRouteName='Home'
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, size, color }) => {
+              let iconName = 'home';
+              if (route.name == 'Home') {
+                iconName = focused ? 'home' : 'home-outline';
+                color = focused ? 'white' : 'grey';
+              } else if (route.name == 'Search') {
+                iconName = focused ? 'search' : 'search-outline';
+                color = focused ? 'white' : 'grey';
+              }
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarStyle: appStyle.tab,
+            tabBarActiveTintColor: 'white',
+          })}
+        >
+          <Tabs.Screen
+            name='Home'
+            component={HomePage}
+            options={{
+              title: 'Bibliothèque',
+              headerShown: false,
+            }}
+          />
+          <Tabs.Screen
+            name='Search'
+            component={SearchPage}
+            options={{
+              title: 'Rechercher',
+              headerShown: false,
+            }}
+          />
+        </Tabs.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

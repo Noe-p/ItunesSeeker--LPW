@@ -1,73 +1,58 @@
-import React, { useState } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
-import { SearchInput } from '../components';
-import searchStyles from '../styles/pages/search.scss';
-import { SongType } from '../Types';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { SearchInput, SongCard } from '../components';
+import { SongDetail } from '../components/SongDetail';
+import { fetchSongs } from '../service/itunesApi';
+import { searchPageStyle } from './searchPageStyle';
 
-export function SearchPage(): JSX.Element {
+const SongList = () => {
   const [text, setText] = useState('');
+  const [songList, setSongList] = useState([]);
 
-  const SongFixture: SongType[] = [
-    {
-      id: '1',
-      title: 'Test',
-      artist: 'John',
-      album: 'Test',
-      cover: 'ratm.jpg',
-    },
-    {
-      id: '2',
-      title: 'Test2',
-      artist: 'John2',
-      album: 'Test2',
-      cover: 'ratm.jpg',
-    },
-    {
-      id: '3',
-      title: 'Test3',
-      artist: 'John3',
-      album: 'Test3',
-      cover: 'ratm.jpg',
-    },
-    {
-      id: '4',
-      title: 'Test4',
-      artist: 'John4',
-      album: 'Test4',
-      cover: 'ratm.jpg',
-    },
-  ];
-
-  const SongCard = ({ item }) => (
-    <View style={searchStyles.songCard}>
-      <Image
-        style={searchStyles.imageCover}
-        source={require('../../assets/cover/ratm.jpg')}
-      />
-      <View style={searchStyles.containerTextSongCard}>
-        <Text style={searchStyles.SongCardTitle}>{item.title}</Text>
-        <Text style={searchStyles.songCardInfos}>
-          {item.artist} - {item.album}
-        </Text>
-      </View>
-    </View>
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchSongs(text);
+      setSongList(res);
+    };
+    fetchData();
+  });
 
   return (
-    <View style={searchStyles.container}>
-      <Text style={searchStyles.title}>{'Rechercher'}</Text>
+    <View style={searchPageStyle.container}>
+      <Text style={searchPageStyle.title}>{'Rechercher'}</Text>
       <SearchInput
         value={text}
         onChangeText={setText}
-        style={searchStyles.searchInput}
+        style={searchPageStyle.searchInput}
         placeholder={'Artistes, titres ou podcasts'}
       />
       <FlatList
-        data={SongFixture}
-        renderItem={SongCard}
+        data={songList}
+        renderItem={({ item }) => <SongCard {...item} />}
         keyExtractor={(item) => item.id}
-        style={{ width: '95%' }}
+        style={{
+          width: '100%',
+          marginBottom: 10,
+          height: 700,
+          paddingHorizontal: '2.5%',
+        }}
       />
     </View>
+  );
+};
+
+export function SearchPage(): JSX.Element {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name='SongList' component={SongList} />
+      <Stack.Screen name='SongDetail' component={SongDetail} />
+    </Stack.Navigator>
   );
 }
