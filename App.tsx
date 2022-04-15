@@ -38,6 +38,7 @@ export default function App(): JSX.Element {
               title: 'Bibliothèque',
               headerShown: false,
             }}
+            initialParams={{ goBack: null }}
           />
           <Tabs.Screen
             name='Search'
@@ -46,6 +47,7 @@ export default function App(): JSX.Element {
               title: 'Rechercher',
               headerShown: false,
             }}
+            initialParams={{ goBack: null }}
           />
         </Tabs.Navigator>
       </NavigationContainer>

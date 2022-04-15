@@ -38,16 +38,4 @@ export const detailPageStyle = StyleSheet.create({
     color: 'grey',
     fontSize: 16,
   },
-  buttonAddSong: {
-    backgroundColor: '#1DB954',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 30,
-    marginTop: 30,
-  },
-  textButtonAddSong: {
-    color: 'white',
-    fontSize: 27,
-    fontWeight: 'bold',
-  },
 });

@@ -4,4 +4,5 @@ export interface SongType {
   artist: string;
   album: string;
   cover: string;
+  rate: number;
 }

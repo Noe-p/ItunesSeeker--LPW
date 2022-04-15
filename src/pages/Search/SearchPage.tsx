@@ -1,14 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
-import { SearchInput, SongCard } from '../components';
-import { SongDetail } from '../components/SongDetail';
-import { fetchSongs } from '../service/itunesApi';
+import { SearchInput, SongCard, SongDetail } from '../../components';
+import { fetchSongs } from '../../service/itunesApi';
 import { searchPageStyle } from './searchPageStyle';
 
-const SongList = () => {
+const SongListApi = () => {
   const [text, setText] = useState('');
-  const [songList, setSongList] = useState([]);
+  const [SongList, setSongList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +15,7 @@ const SongList = () => {
       setSongList(res);
     };
     fetchData();
-  });
+  }, [text]);
 
   return (
     <View style={searchPageStyle.container}>
@@ -28,8 +27,14 @@ const SongList = () => {
         placeholder={'Artistes, titres ou podcasts'}
       />
       <FlatList
-        data={songList}
-        renderItem={({ item }) => <SongCard {...item} />}
+        data={SongList}
+        renderItem={({ item }) => (
+          <SongCard
+            goBack={'SongListApi'}
+            stack={'SongDetailApi'}
+            song={item}
+          />
+        )}
         keyExtractor={(item) => item.id}
         style={{
           width: '100%',
@@ -47,12 +52,13 @@ export function SearchPage(): JSX.Element {
 
   return (
     <Stack.Navigator
+      initialRouteName='SongListApi'
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name='SongList' component={SongList} />
-      <Stack.Screen name='SongDetail' component={SongDetail} />
+      <Stack.Screen name='SongListApi' component={SongListApi} />
+      <Stack.Screen name='SongDetailApi' component={SongDetail} />
     </Stack.Navigator>
   );
 }

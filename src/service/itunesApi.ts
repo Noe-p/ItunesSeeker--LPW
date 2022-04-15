@@ -13,6 +13,7 @@ const transformSong = (song: any) => {
     artist: song.artistName,
     album: song.collectionName,
     cover: song.artworkUrl100,
+    rate: 3,
   };
 };
 

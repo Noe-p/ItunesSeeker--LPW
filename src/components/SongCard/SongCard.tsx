@@ -3,16 +3,22 @@ import React from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
-import { songDetail } from '../redux/songDetailSlice';
-import { SongType } from '../types';
+import { songDetail } from '../../redux/songDetailSlice';
+import { SongType } from '../../types';
 import { songCardStyle } from './songCardStyle';
 
-export const SongCard = (song: SongType) => {
+interface SongCardProps {
+  song: SongType;
+  stack: string;
+  goBack: string;
+}
+export const SongCard = (props: SongCardProps) => {
+  const { song, stack, goBack } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const onSongClick = () => {
-    navigation.navigate('SongDetail');
+    navigation.navigate(stack, { goBack: goBack });
     dispatch(songDetail(song));
   };
 

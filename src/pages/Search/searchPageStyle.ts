@@ -4,7 +4,7 @@ export const searchPageStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#191414',
-    paddingTop: 50,
+    paddingTop: 70,
   },
   title: {
     color: 'white',
