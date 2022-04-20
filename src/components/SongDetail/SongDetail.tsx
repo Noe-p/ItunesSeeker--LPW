@@ -18,11 +18,12 @@ export const SongDetail = () => {
   const dispatch = useDispatch();
   const route = useRoute();
   const [modalVisible, setModalVisible] = useState(false);
+  const [rateValue, setRateValue] = useState(song.rate);
 
   const ToggleSongToList = () => {
-    songListUser.includes(song)
+    songListUser.length > 0
       ? dispatch(removeSong(song))
-      : dispatch(addSong(song));
+      : dispatch(addSong({ song: song, rate: rateValue }));
 
     route.params.goBack == 'SongListUser'
       ? navigation.navigate('SongListUser')
@@ -35,6 +36,9 @@ export const SongDetail = () => {
         <RateModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          song={song}
+          rateValue={rateValue}
+          setRateValue={setRateValue}
         />
         <View style={detailPageStyle.topBar}>
           <Pressable onPress={() => navigation.navigate(route?.params.goBack)}>
@@ -56,12 +60,12 @@ export const SongDetail = () => {
               {song.title} - {song.album}
             </Text>
             <Text style={detailPageStyle.detailSongArtist}>{song.artist}</Text>
-            {song.rate == 0 ? <></> : <Rate />}
+            {rateValue == 0 ? <></> : <Rate rateNumber={rateValue} />}
           </View>
         </View>
         <SubmitButton
           onPress={ToggleSongToList}
-          content={songListUser.includes(song) ? 'Supprimer' : 'Ajouter'}
+          content={songListUser.length > 0 ? 'Supprimer' : 'Ajouter'}
           color='#1DB954'
         />
       </View>

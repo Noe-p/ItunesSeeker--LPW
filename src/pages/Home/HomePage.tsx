@@ -8,13 +8,13 @@ import { SongType } from '../../types';
 import { homePageStyle } from './homePageStyle';
 
 const SongListUser = () => {
-  const SongList: SongType[] = useSelector(songSelector).song;
+  const songList: SongType[] = useSelector(songSelector).song;
 
   return (
     <View style={homePageStyle.container}>
       <Text style={homePageStyle.title}>{'Bibliothèque'}</Text>
       <FlatList
-        data={SongList}
+        data={songList}
         renderItem={({ item }) => (
           <SongCard
             goBack={'SongListUser'}

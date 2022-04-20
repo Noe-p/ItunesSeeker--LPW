@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, Modal, Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
-import { songDetailSelector } from '../../redux/songDetailSlice';
+import { useDispatch } from 'react-redux';
+import { updateRate } from '../../redux/songSlice';
 import { SongType } from '../../types';
 import { SubmitButton } from '../Buttons';
 import { rateModalStyle } from './rateModalStyle';
@@ -10,12 +10,15 @@ import { rateModalStyle } from './rateModalStyle';
 interface RateModalProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
+  song: SongType;
+  rateValue: number;
+  setRateValue: (rate: number) => void;
 }
 
 export const RateModal = (props: RateModalProps) => {
-  const { modalVisible, setModalVisible } = props;
-  const song: SongType = useSelector(songDetailSelector).songDetail;
-  const [rateValue, setRateValue] = useState(song.rate);
+  const { modalVisible, setModalVisible, song, rateValue, setRateValue } =
+    props;
+  const dispatch = useDispatch();
 
   const incrRate = () => {
     if (rateValue < 5) {
@@ -27,6 +30,11 @@ export const RateModal = (props: RateModalProps) => {
     if (rateValue > 0) {
       setRateValue(rateValue - 1);
     }
+  };
+
+  const onSubmit = () => {
+    dispatch(updateRate({ id: song.id, rate: rateValue }));
+    setModalVisible(!modalVisible);
   };
 
   return (
@@ -74,7 +82,7 @@ export const RateModal = (props: RateModalProps) => {
             />
             <SubmitButton
               content='Noter'
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => onSubmit()}
               color='#1DB954'
             />
           </View>

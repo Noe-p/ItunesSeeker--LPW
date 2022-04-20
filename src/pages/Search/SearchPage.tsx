@@ -7,12 +7,17 @@ import { searchPageStyle } from './searchPageStyle';
 
 const SongListApi = () => {
   const [text, setText] = useState('');
-  const [SongList, setSongList] = useState([]);
+  const [songList, setsongList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetchSongs(text);
-      setSongList(res);
+      let res = [];
+      try {
+        res = await fetchSongs(text);
+      } catch (error) {
+        console.log(error);
+      }
+      setsongList(res);
     };
     fetchData();
   }, [text]);
@@ -27,7 +32,7 @@ const SongListApi = () => {
         placeholder={'Artistes, titres ou podcasts'}
       />
       <FlatList
-        data={SongList}
+        data={songList}
         renderItem={({ item }) => (
           <SongCard
             goBack={'SongListApi'}

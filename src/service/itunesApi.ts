@@ -13,7 +13,7 @@ const transformSong = (song: any) => {
     artist: song.artistName,
     album: song.collectionName,
     cover: song.artworkUrl100,
-    rate: 3,
+    rate: 0,
   };
 };
 
@@ -23,12 +23,14 @@ export const fetchSongs = async (title: string) => {
       baseUrl +
         createRequest({
           term: title,
-          media: 'music',
+          entity: 'song',
           limit: '25',
         })
     );
     const json = await res.json();
-    if (title != '') return json.results.map(transformSong);
-    else return [];
-  } catch (e) {}
+    return json.results.map(transformSong);
+  } catch (e) {
+    console.log();
+    return [];
+  }
 };
