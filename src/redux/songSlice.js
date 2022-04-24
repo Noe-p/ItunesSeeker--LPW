@@ -8,9 +8,7 @@ const songSlice = createSlice({
       return [...state, { ...action.payload.song, rate: action.payload.rate }];
     },
     removeSong: (state, action) => {
-      return state.filter(function (el) {
-        return el.id != action.payload.id;
-      });
+      return state.filter((el) => el.id != action.payload.id);
     },
     updateRate: (state, action) => {
       return state.map((ele) =>
@@ -22,6 +20,8 @@ const songSlice = createSlice({
   },
 });
 
-export const { addSong, removeSong, updateRate } = songSlice.actions;
+export const { addSong, removeSong, updateRate, filterState } =
+  songSlice.actions;
 export const songSelector = (state) => state;
+
 export default songSlice.reducer;

@@ -19,6 +19,7 @@ export const Rate = (props: RateProps) => {
       }
       array.push(
         <Ionicons
+          key={i}
           name={name}
           size={30}
           color={'#1DB954'}

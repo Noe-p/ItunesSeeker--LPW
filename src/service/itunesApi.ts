@@ -14,6 +14,7 @@ const transformSong = (song: any) => {
     album: song.collectionName,
     cover: song.artworkUrl100,
     rate: 0,
+    kind: song.kind,
   };
 };
 
@@ -23,14 +24,13 @@ export const fetchSongs = async (title: string) => {
       baseUrl +
         createRequest({
           term: title,
-          entity: 'song',
           limit: '25',
         })
     );
     const json = await res.json();
     return json.results.map(transformSong);
   } catch (e) {
-    console.log();
+    console.log(e);
     return [];
   }
 };

@@ -13,4 +13,9 @@ export const homePageStyle = StyleSheet.create({
     textAlign: 'left',
     width: '95%',
   },
+  filterButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '95%',
+  },
 });

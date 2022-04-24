@@ -21,7 +21,7 @@ export const SongDetail = () => {
   const [rateValue, setRateValue] = useState(song.rate);
 
   const ToggleSongToList = () => {
-    songListUser.length > 0
+    songListUser.find((ele) => ele.id == song.id)
       ? dispatch(removeSong(song))
       : dispatch(addSong({ song: song, rate: rateValue }));
 
@@ -65,7 +65,11 @@ export const SongDetail = () => {
         </View>
         <SubmitButton
           onPress={ToggleSongToList}
-          content={songListUser.length > 0 ? 'Supprimer' : 'Ajouter'}
+          content={
+            songListUser.find((ele) => ele.id == song.id)
+              ? 'Supprimer'
+              : 'Ajouter'
+          }
           color='#1DB954'
         />
       </View>
